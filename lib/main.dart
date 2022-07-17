@@ -40,6 +40,118 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late double pixel;
+  late double rem = 0.0625;
+  late double em = 0.0625;
+  late double mm = 0.2645833333;
+  late double inch = 0.0104166667;
+
+  final pxController = TextEditingController();
+  final remController = TextEditingController();
+  final emController = TextEditingController();
+  final mmController = TextEditingController();
+  final inController = TextEditingController();
+
+  void _pxChanged(String text) {
+    if (text.isEmpty) {
+      remController.text = '';
+      emController.text = '';
+      mmController.text = '';
+      inController.text = '';
+    } else {
+      double inputPx = double.parse(text);
+      double outputRem = inputPx * rem;
+      double outputEm = inputPx * em;
+      double outputMm = inputPx * mm;
+      double outputIn = inputPx * inch;
+
+      remController.text = outputRem.toStringAsFixed(2);
+      emController.text = outputEm.toStringAsFixed(2);
+      mmController.text = outputMm.toStringAsFixed(2);
+      inController.text = outputIn.toStringAsFixed(2);
+    }
+  }
+
+  void _remChanged(String text) {
+    if (text.isEmpty) {
+      pxController.text = '';
+      emController.text = '';
+      mmController.text = '';
+      inController.text = '';
+    } else {
+      double inputRem = double.parse(text);
+      double outputPx = inputRem / rem;
+      double outputEm = inputRem;
+      double outputMm = outputPx * mm;
+      double outputIn = outputPx * inch;
+
+      pxController.text = outputPx.toStringAsFixed(2);
+      emController.text = outputEm.toStringAsFixed(2);
+      mmController.text = outputMm.toStringAsFixed(2);
+      inController.text = outputIn.toStringAsFixed(2);
+    }
+  }
+
+  void _emChanged(String text) {
+    if (text.isEmpty) {
+      pxController.text = '';
+      remController.text = '';
+      mmController.text = '';
+      inController.text = '';
+    } else {
+      double inputEm = double.parse(text);
+      double outputPx = inputEm / em;
+      double outputRem = inputEm;
+      double outputMm = outputPx * mm;
+      double outputIn = outputPx * inch;
+
+      pxController.text = outputPx.toStringAsFixed(2);
+      remController.text = outputRem.toStringAsFixed(2);
+      mmController.text = outputMm.toStringAsFixed(2);
+      inController.text = outputIn.toStringAsFixed(2);
+    }
+  }
+
+  void _mmChanged(String text) {
+    if (text.isEmpty) {
+      pxController.text = '';
+      remController.text = '';
+      emController.text = '';
+      inController.text = '';
+    } else {
+      double inputMm = double.parse(text);
+      double outputPx = inputMm / mm;
+      double outputRem = outputPx * rem;
+      double outputEm = outputRem;
+      double outputIn = outputPx * inch;
+
+      pxController.text = outputPx.toStringAsFixed(2);
+      remController.text = outputRem.toStringAsFixed(2);
+      emController.text = outputEm.toStringAsFixed(2);
+      inController.text = outputIn.toStringAsFixed(2);
+    }
+  }
+
+  void _inChanged(String text) {
+    if (text.isEmpty) {
+      pxController.text = '';
+      remController.text = '';
+      emController.text = '';
+      mmController.text = '';
+    } else {
+      double inputIn = double.parse(text);
+      double outputPx = inputIn / inch;
+      double outputRem = outputPx * rem;
+      double outputEm = outputRem;
+      double outputMm = outputPx * mm;
+
+      pxController.text = outputPx.toStringAsFixed(2);
+      remController.text = outputRem.toStringAsFixed(2);
+      emController.text = outputEm.toStringAsFixed(2);
+      mmController.text = outputMm.toStringAsFixed(2);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,19 +187,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.transparent,
               ),
             ),
-            buildTextField('Pixel', 'px '),
+            buildTextField('Pixel', 'px ', pxController, _pxChanged),
             const Divider(color: Colors.transparent),
-            buildTextField('Root element font-size', 'rem '),
+            buildTextField(
+                'Root element font-size', 'rem ', remController, _remChanged),
             const Divider(color: Colors.transparent),
-            buildTextField('Element font-size', 'em '),
+            buildTextField(
+                'Element font-size', 'em ', emController, _emChanged),
             const Divider(color: Colors.transparent),
-            buildTextField('Millimeter', 'mm '),
+            buildTextField('Millimeter', 'mm ', mmController, _mmChanged),
             const Divider(color: Colors.transparent),
-            buildTextField('Inches', 'inches '),
-            const Divider(color: Colors.transparent),
-            buildTextField('Dots per inch', 'dpi '),
-            const Divider(color: Colors.transparent),
-            buildTextField('Viewport height', 'vh '),
+            buildTextField('Inches', 'in ', inController, _inChanged),
           ],
         ),
       ),
@@ -95,8 +205,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Widget buildTextField(String label, String prefix) {
+Widget buildTextField(String label, String prefix,
+    TextEditingController fieldController, Function(String) func) {
   return TextField(
+    controller: fieldController,
     decoration: InputDecoration(
       labelText: label,
       labelStyle: const TextStyle(
@@ -110,6 +222,7 @@ Widget buildTextField(String label, String prefix) {
       fontSize: 20.0,
     ),
     keyboardType: TextInputType.number,
+    onChanged: func,
   );
 }
 

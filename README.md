@@ -1,7 +1,5 @@
 # 👨‍💻 CSS UNIT CONVERTER
 
-(**_EM DESENVOLVIMENTO_**)
-
 Aplicação Mobile em Flutter - Calculadora de Unidades de Medida CSS.
 
 ## ⚙️ Informações adicionais
@@ -15,4 +13,8 @@ Aplicação Mobile em Flutter - Calculadora de Unidades de Medida CSS.
 <div align="center">
   <img width="200" alt="Imagem da aplicação" src="./flutter_01.png">
   <img width="200" alt="Imagem da aplicação" src="./flutter_02.png">
+</div>
+<div align="center">
+  <img width="200" alt="Imagem da aplicação" src="./flutter_03.png">
+  <img width="200" alt="Imagem da aplicação" src="./flutter_04.png">
 </div>
